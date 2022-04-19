@@ -1,0 +1,176 @@
+\documentclass[12pt]{article}
+
+\usepackage{amssymb,amsmath,amsfonts,eurosym,geometry,ulem,graphicx,caption,color,setspace,sectsty,comment,footmisc,caption,natbib,pdflscape,subfigure,array,hyperref}
+
+\normalem
+
+\onehalfspacing
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}{Proposition}
+\newenvironment{proof}[1][Proof]{\noindent\textbf{#1.} }{\ \rule{0.5em}{0.5em}}
+
+\newtheorem{hyp}{Hypothesis}
+\newtheorem{subhyp}{Hypothesis}[hyp]
+\renewcommand{\thesubhyp}{\thehyp\alph{subhyp}}
+
+\newcommand{\red}[1]{{\color{red} #1}}
+\newcommand{\blue}[1]{{\color{blue} #1}}
+
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\arraybackslash\hspace{0pt}}m{#1}}
+
+
+\geometry{left=1.0in,right=1.0in,top=1.0in,bottom=1.0in}
+
+\begin{document}
+
+\begin{titlepage}
+\title{A review of High Dimensional Nonlinear Data Dimension Reduction Methods
+\thanks{Electronic address: \texttt{jaguirre31@gatech.edu}; Corresponding author}}
+\author{Jacob Aguirre, Ruirui Ma, Shrey Patel}
+\date{\today}
+\maketitle
+\begin{abstract}
+\noindent  We seek to examine the effects of access to cigarette and e-cigarette ads on teenagers' views of cigarettes in this study. A nationally representative sample of 802 teenagers (aged 13–17) was randomly allocated to see three e-cigarette advertising or three control advertisements. Never-smokers exposed to e-cigarette commercials (n = 352) reported considerably lower perceived smoking risks than those exposed to the control condition (n = 320). There were no significant differences between the conditions among ever-smokers. In subgroup analyses, current smokers in the e-cigarette condition (those who had smoked in the previous 30 days) reported substantially lower perceived advantages of smoking than those from the control treatment. Advertisements for e-cigarettes have the potential to influence teenagers' attitudes toward tobacco. \\
+\vspace{0in}\\
+\noindent\textbf{Keywords:} E-cigarettes, Health Economics, Machine Learning\\
+\vspace{0in}\\
+\noindent\textbf{JEL Codes:} I11, I14, J18\\
+
+\bigskip
+\end{abstract}
+\setcounter{page}{0}
+\thispagestyle{empty}
+\end{titlepage}
+\pagebreak \newpage
+
+
+
+
+\doublespacing
+
+
+\section{Background} \label{sec:introduction}
+
+\hspace{5mm}The 2019 outbreak of E-cigarette or Vaping Use-Associated Lung Injury Crisis (EVALI) increased awareness of potential health risks associated with vaping among the general public [1]. By February 2020, the CDC had recorded over 2800 hospitalizations due to EVALI along with 68 deaths caused by the condition. Recent research has documented that news articles warning about vaping dangers increased 130\% between July 25th, 2019 and September 27th, 2019 [2]. THC-containing vaping goods were strongly linked to EVALI cases, with 82 percent of hospitalized patients using any THC-containing vaping product, despite 14 percent of hospitalized cases using solely nicotine-containing products [5]. The perceived harmfulness of e-cigarettes has been found to be a significant predictor of smokers' behavior when considering quitting or switching some of their smoking activity to e-cigarettes, as well as youth's behavior when deciding whether to smoke cigarettes, use e-cigarettes, abstain from both, or progress from one product to the other [3-5]. 
+
+In addition, number of high school students who used e-cigarette increased by 78\% resulting in 3.05 million and the number of middle school students who use e-cigarettes increased by 48\% bringing the total up to 570,000 between 2017-2018 [3]. Furthermore, as many as one in five U.S. adult cigarette smokers have tried e-cigarettes [4,5]. Current cigarette users could decide to continue smoking cigarettes, or adjust their patterns and begin using both cigarettes \& e-cigarettes, or neither.
+
+Understanding how risk perceptions are formed and how they are influenced by extrinsic health and information shocks is therefore critical to comprehending various usage patterns and developing strategies to correct misperceptions and reduce harmful public health effects. Our research adds to the current limited literature on the subject by providing some of the first assessments of how risk perceptions change in response to a negative information shock and during a phase of extensive government and media messaging about the dangers of vaping.
+
+In this study, I seek to use 2018, 2019, and 2020 National Youth Tobacco Survey data to build different prediction models that can predict whether or not a person would consume e-cigarettes. I divide the data into two groups: never-smokers and cigarette smokers. The never-smokers' data was evaluated to establish the best model for predicting the intention to smoke cigarettes in both e-cigarette and non-e-cigarette smokers.
+
+The rest of this paper is as follows: Section 2 introduces background of existing literature of risk perceptions of e-cigarettes and the effects it has on future usage; Section 3 provides
+a theoretical model of the problem and extends an empirical approach to measure the trend in risk perceptions and future usage; Section 4 provides a commentary of the results, as well as supplying an analytic approach to decide whether our hypothesis was correct; Section 5 presents concluding remarks and avenues of future research.
+
+
+\section{Literature Review} \label{sec:literature}
+
+\hspace{5mm}The increasing usage of electronic cigarettes, or inhalant nicotine vaping devices among youth and young adults has been increasing in the United States [1,2]. This raises a cause for concern due to the potential of nicotine addiction, increased risk for use of other tobacco products and drugs, and long-term health risks [3]. The EVALI Crisis, which began near the summer of 2019, has caused an increased awareness of the potential health risks associated with vaping among the general populace. These behaviors can be shown to lead to long-term damage [4-6]. Evidence has also shown a wide array of short-term adverse experiences attributed to e-cigarette use.
+
+This study aims to look at how the EVALI Crisis affected youth and young adult usage of e-cigarettes in the United States.  The formation of health risk beliefs in youth users is interesting because of the role that media exposure, NIH, CDC, and other federal organizations can play in spreading information about the epidemic and preventing more widespread harm. Information dissemination has been proven to be a vital part of helping prevent risky or dangerous health behaviors [4]. Furthermore, susceptibility to the adaptation of dangerous behaviors is an important factor in public health administration. Psychological problems and rebelliousness are related to increased susceptibility. The perception of e-cigarettes as addictive and harmful serves as a protective factor [6].
+
+These varied demographics and their motives for using e-cigarettes have been the subject of research. To discover the inter-relationships between vaping and smoking, as well as between perceptions and usage, several papers have sought to integrate information on perceived danger of e-cigarettes with reported e-cigarette and cigarette use from surveys [7,8]. According to assessments of the 2012 National Youth Tobacco Survey, perceptions that e-cigarettes are less dangerous than traditional cigarettes are also a major predictor of e-cigarette use among teenagers, even those who have never used cigarettes [9]. 
+
+Previous literature has found that perceived relative risk on non-combustible nicotine products is extremely diverse by product type and among sub-populations after conducting a comprehensive review of the literature on risk perceptions across nicotine products. During several of the time periods analyzed in the various research, relative risk perceptions for e-cigarettes, which represent the newest entrance into the market for non-combustible nicotine products, appear to better reflect epidemiological evidence than for other tobacco products [10]. This is natural, as it is documented that different subgroups often have different preferences that affect their choices for using cigarettes, e-cigarettes, and variations of each, or simply neither [10,11].
+
+Cigarette smokers who did not want to stop had higher nicotine dependency, poorer quitting self-efficacy, and worse socioeconomic level than smokers who do intend to quit [12].
+
+
+
+\section{Methodology} \label{sec:methodology}
+
+
+\subsection{Theoretical Model}
+\hspace{5mm}We seek to extend a Bayesian learning context for the usage and development of a theoretical model, from which we can test our empirical model on. Consider the set $N$ to be the set of agents in the game. Let $\Omega$ denote the state space of a system, where $\sum\limits_{i=1}^{n}a_i=1$ denotes that the probability of all actions in the state space must sum to one, and we'll assume $\Omega$ is finite. For each player $i\in N$, there exists the set $A_i$ (the set of actions available to player $i$). Each player $i$ holds a prior belief of the state of nature given by a probability measure $p_i$ on $\Omega$. In our case, an agent holds a prior perception of e-cigarettes, which can be either positive, neutral, or negative. This degree will vary and can take on any value within $[-1,1]$. 
+
+At any given point of play during the game, some state $\omega\in\Omega$ is realized, such that a user has gained new information of the EVALI crisis, and has updated their prior beliefs. Thus, we seek to model a players decision making process under uncertainty. Define a profile called $\gamma_i$ of a standard signal function, and denote $\gamma_i(\omega)$ to be the agent observing a signal of a state of nature. Assume the agent has a $k$x$1$ vector denoting the personal characteristics for each agent, which are likely to affect their belief states. Define $T_i$ to be the different types of players. I define $p_i(\gamma_i^{-1}(t_i))>0$ $\forall$ $t_i\in T_i$, where a player $i$ assigns positive prior probability to every member of $T_i$.
+
+
+\subsection{Empirical Model}
+
+\subsubsection{Data}
+
+\hspace{5mm}The data for this study comes from the National Youth Tobacco Survey(NYTS) over the course of three years: 2018, 2019, and 2020. The surveyors collect data on teenagers' tobacco-related knowledge, perceptions, and behaviours across the country. The NYTS is an annual survey of middle and high school students performed by the Centers for Disease Control and Prevention (CDC). Its approach has already been discussed. The CDC's institutional review board approved its design. The study included children in grades 6–12 who were enrolled in a public, secular, or religious private school in the United States. A stratified, cluster sample was used, with the goal of oversampling non-Hispanic Black and Hispanic kids. Both at the school and student levels, participation was entirely optional.
+
+\subsubsection{Outcome Measure}
+
+\hspace{5mm}The outcome measure we are seeking to explain is blank. Students' demographic profile, tobacco usage and views, along with their smoking cessation strategy were all independent factors. Students' sex, age, and ethnicity were among the demographic factors. Non-Hispanics were further categorised as Black, White, Asian, or those of another or many races, depending on their ethnicity.
+
+Adolescents' attitudes of tobacco's dangers were also examined. Students were asked how strongly they agreed with the statement "All tobacco products are hazardous," to which they may reply "strongly agree," "agree," "disagree," or "strongly disagree" on a four-point Likert scale. Students were also asked if they thought "electronic cigarettes, or e-cigarettes, such as Ruyan or NJOY, are less dangerous, similarly harmful, or more harmful than normal cigarettes?" Students could answer they'd "never heard of electronic cigarettes or e-cigarettes" or "didn't know enough about these goods" if they chose one of these alternatives.
+
+\subsubsection{Descriptive Statistics}
+
+\hspace{5mm}We run a variety of tests to generate a panel of descriptive statistics from which we can observe and make note of trends in our data. 
+
+\subsubsection{Statistical Analysis}
+
+\hspace{5mm}I seek to employ a stochastic model to obtain
+
+\section{Results} \label{sec:result}
+
+\hspace{5mm}We first begin by defining the model's components. 
+
+\hspace{5mm}Overall
+\section{Discussion} \label{sec:discussion}
+
+\hspace{5mm}Many teens in the United States report being exposed to e-cigarette marketing messages via a number of outlets. Ads for e-cigarettes may impact teenage beginning of e-cigarette usage. According to the findings of this study, exposure to e-cigarette ads can also impact teenagers' risk perception of smoking cigarettes, which is a strong predictor of smoking start (Roditis et al., 2016; Song et al., 2009). Youth who've never-smoked and were exposed to e-cigarette commercials reported considerably decreased perceived hazards of smoking cigarettes. Regulating the platforms and material of e-cigarette marketing should be examined in order to reduce teenage exposure and the potentially negative impacts on nonsmokers. 
+
+
+\subsection{Limitations}
+As a result, shifts in attitudes regarding e-cigarettes do not represent individual shifts in attitudes within the same group of persons. The demographics of both groups, however, were indicative of the general population of the United States. Self-reported data was also employed in this study, which has limitations since social desirability bias may cause individuals to offer an incorrect depiction of their own perceptions [15]. Furthermore, the survey was completely optional and we may have lost responses from both adults and youth who decided taking the survey was not worth effort and time. 
+
+Additionally, the NYTS data contains a relatively restricted set of sociodemographic indicators, as well as little information on socioeconomic or familial history. As these factors are linked to teenage nicotine use, leaving them out might lead to bias [16]. 
+
+\newpage
+\begin{thebibliography}{}
+\bibitem{First Entry}Alber, Julia M et al. “Examining e-cigarette perspectives before and after the EVALI peak in cases.” Addictive behaviors vol. 119 (2021): 106939. doi:10.1016/j.addbeh.2021.106939
+
+\bibitem{increase news coverage EVALI}Leas, Eric C et al. “Self-reported Cannabidiol (CBD) Use for Conditions With Proven Therapies.” JAMA network open vol. 3,10 e2020977. 1 Oct. 2020, doi:10.1001/jamanetworkopen.2020.20977
+
+
+\bibitem{Second Entry}Dave, D., Dench, D., Kenkel, D. et al. News that takes your breath away: risk perceptions during an outbreak of vaping-related lung injuries. J Risk Uncertain 60, 281–307 (2020). https://doi.org/10.1007/s11166-020-09329-2
+
+\bibitem{Third Entry}Pearson, Jennifer L., et al. "e-Cigarette awareness, use, and harm perceptions in US adults." American journal of public health 102.9 (2012): 1758-1766.
+
+\bibitem{Fourth Entry}King, Brian A., et al. "Awareness and ever-use of electronic cigarettes among US adults, 2010–2011." Nicotine \& tobacco research 15.9 (2013): 1623-1627.
+
+\bibitem{fifth entry}Krishnasamy, Vikram P et al. “Update: Characteristics of a Nationwide Outbreak of E-cigarette, or Vaping, Product Use-Associated Lung Injury - United States, August 2019-January 2020.” MMWR. Morbidity and mortality weekly report vol. 69,3 90-94. 24 Jan. 2020, doi:10.15585/mmwr.mm6903e2
+
+
+\bibitem{sixth entry}Brose, Leonie S., et al. "Perceived relative harm of electronic cigarettes over time and impact on subsequent use. A survey with 1-year and 2-year follow-ups." Drug and Alcohol dependence 157 (2015): 106-111.
+
+\bibitem{seventh entry}Amrock, Stephen M., et al. "Perception of e-cigarette harm and its correlation with use among US adolescents." Nicotine \& Tobacco Research 17.3 (2015): 330-336.
+
+\bibitem{eighth entry}Biener, Lois, and J. Lee Hargraves. "A longitudinal study of electronic cigarette use among a population-based sample of adult smokers: association with smoking cessation and motivation to quit." Nicotine \& Tobacco Research 17.2 (2015): 127-133.
+
+\bibitem{ninth entry}McMillen, Robert C., et al. "Trends in electronic cigarette use among US adults: use is increasing in both smokers and nonsmokers." Nicotine \& tobacco research 17.10 (2014): 1195-1202.
+
+\bibitem{tenth entry}Rapp, Joseph L et al. “Changes in E-Cigarette Perceptions Over Time: A National Youth Tobacco Survey Analysis.” American journal of preventive medicine vol. 61,2 (2021): 174-181. doi:10.1016/j.amepre.2021.03.006
+
+
+\bibitem{eleventh entry}Siahpush, Mohammad et al. “Association of smoking cessation with financial stress and material well-being: results from a prospective study of a population-based national survey.” American journal of public health vol. 97,12 (2007): 2281-7. doi:10.2105/AJPH.2006.103580
+
+
+\bibitem{sociodemographics e-cigarettes}Simon, Patricia, et al. "Socioeconomic status and adolescent e-cigarette use: The mediating role of e-cigarette advertisement exposure." Preventive medicine 112 (2018): 193-198.
+
+\bibitem{Receptivity to E-cigarette smoking}Pokhrel, Pallav, et al. "Receptivity to e-cigarette marketing, harm perceptions, and e-cigarette use." American journal of health behavior 39.1 (2015): 121-131.
+
+\bibitem{School-level clustering us adolescents}Corsi, Daniel J, and Adam M Lippert. “An examination of the shift in school-level clustering of US adolescent electronic cigarette use and its multilevel correlates, 2011-2013.” Health \& place vol. 38 (2016): 30-8. doi:10.1016/j.healthplace.2015.12.007
+
+\bibitem{Underreporting socioeconomic status}Graham, H., and L. Owen. "Are there socioeconomic differentials in under-reporting of smoking in pregnancy?." Tobacco Control 12.4 (2003): 434-434.
+
+\bibitem{Underreporting smoking status}Vartiainen, E., et al. "Validation of self reported smoking by serum cotinine measurement in a community-based study." Journal of Epidemiology \& Community Health 56.3 (2002): 167-170.
+
+\end{thebibliography}
+
+
+\section{Funding Statement}
+Funding for this study was provided by the Georgia Institute of Technology Presidential Undergraduate Research Award. Georgia Tech held no role in the study design, collection, analysis or interpretation of the data, writing the manuscript, or the decision to submit the paper for publication.
+
+\section{Disclaimer}
+The findings and conclusions in this report are those of the author and do not necessarily represent the official position of the Georgia Institute of Technology or any of its affiliated institutions or agencies. This article was prepared while Jacob Aguirre was an undergraduate student at the Georgia Institute of Technology, School of Economics. 
+
+\end{document}
