@@ -33,11 +33,11 @@
 \date{\today}
 \maketitle
 \begin{abstract}
-\noindent  We seek to examine the effects of access to cigarette and e-cigarette ads on teenagers' views of cigarettes in this study. A nationally representative sample of 802 teenagers (aged 13–17) was randomly allocated to see three e-cigarette advertising or three control advertisements. Never-smokers exposed to e-cigarette commercials (n = 352) reported considerably lower perceived smoking risks than those exposed to the control condition (n = 320). There were no significant differences between the conditions among ever-smokers. In subgroup analyses, current smokers in the e-cigarette condition (those who had smoked in the previous 30 days) reported substantially lower perceived advantages of smoking than those from the control treatment. Advertisements for e-cigarettes have the potential to influence teenagers' attitudes toward tobacco. \\
+\noindent Massive, high-dimensional data sets are already appearing in a variety of sectors of modern research, posing new obstacles. These high-dimensional data sets can typically be modeled as point clouds in a $D-$dimensional space, such that it's concentrated near a $d-$dimensional manifold. Thus, we are able to visualize this data as a low-dimensional representation. The well-known curse of dimensionality in machine learning suggests that a huge amount of training data is necessary in order to obtain a given prediction accuracy. Unless additional assumptions are established, picture and signal recovery requires a significant number of observations to recover a high-dimensional vector. Owing to the fact there exist rich localized constants, global symmetry, repeated patterns, or redundant sampling, many real-world data sets show low-dimensional geometric structures. This study seeks to investigate these local structures on a variety of simulated and real data-sets, and discover which properties contribute to certain models performing well or under performing. As a result, we're attempting to investigate low-dimensional geometric patterns in data sets in order to extract features, forecast data, and recover signals.  \\
 \vspace{0in}\\
-\noindent\textbf{Keywords:} E-cigarettes, Health Economics, Machine Learning\\
+\noindent\textbf{Keywords:} High-Dimensional Data, Machine Learning, Statistical Inference\\
 \vspace{0in}\\
-\noindent\textbf{JEL Codes:} I11, I14, J18\\
+\noindent\textbf{JEL Codes:} C15, C44, C45\\
 
 \bigskip
 \end{abstract}
@@ -54,7 +54,7 @@
 
 \section{Background} \label{sec:introduction}
 
-\hspace{5mm}The 2019 outbreak of E-cigarette or Vaping Use-Associated Lung Injury Crisis (EVALI) increased awareness of potential health risks associated with vaping among the general public [1]. By February 2020, the CDC had recorded over 2800 hospitalizations due to EVALI along with 68 deaths caused by the condition. Recent research has documented that news articles warning about vaping dangers increased 130\% between July 25th, 2019 and September 27th, 2019 [2]. THC-containing vaping goods were strongly linked to EVALI cases, with 82 percent of hospitalized patients using any THC-containing vaping product, despite 14 percent of hospitalized cases using solely nicotine-containing products [5]. The perceived harmfulness of e-cigarettes has been found to be a significant predictor of smokers' behavior when considering quitting or switching some of their smoking activity to e-cigarettes, as well as youth's behavior when deciding whether to smoke cigarettes, use e-cigarettes, abstain from both, or progress from one product to the other [3-5]. 
+\hspace{5mm}The $21^{st}$ century presents new challenges in the realm of statistical inference and data mining. High dimensional data sets are arising more often, which contributes to challenges in attempting to understand and draw conclusions from such data. For the purposes of image and signal recovery, a large amount of technical expertise is needed in order to recover a high-dimensional vector we're interested in [1].
 
 In addition, number of high school students who used e-cigarette increased by 78\% resulting in 3.05 million and the number of middle school students who use e-cigarettes increased by 48\% bringing the total up to 570,000 between 2017-2018 [3]. Furthermore, as many as one in five U.S. adult cigarette smokers have tried e-cigarettes [4,5]. Current cigarette users could decide to continue smoking cigarettes, or adjust their patterns and begin using both cigarettes \& e-cigarettes, or neither.
 
@@ -66,54 +66,40 @@ The rest of this paper is as follows: Section 2 introduces background of existin
 a theoretical model of the problem and extends an empirical approach to measure the trend in risk perceptions and future usage; Section 4 provides a commentary of the results, as well as supplying an analytic approach to decide whether our hypothesis was correct; Section 5 presents concluding remarks and avenues of future research.
 
 
-\section{Literature Review} \label{sec:literature}
-
-\hspace{5mm}The increasing usage of electronic cigarettes, or inhalant nicotine vaping devices among youth and young adults has been increasing in the United States [1,2]. This raises a cause for concern due to the potential of nicotine addiction, increased risk for use of other tobacco products and drugs, and long-term health risks [3]. The EVALI Crisis, which began near the summer of 2019, has caused an increased awareness of the potential health risks associated with vaping among the general populace. These behaviors can be shown to lead to long-term damage [4-6]. Evidence has also shown a wide array of short-term adverse experiences attributed to e-cigarette use.
-
-This study aims to look at how the EVALI Crisis affected youth and young adult usage of e-cigarettes in the United States.  The formation of health risk beliefs in youth users is interesting because of the role that media exposure, NIH, CDC, and other federal organizations can play in spreading information about the epidemic and preventing more widespread harm. Information dissemination has been proven to be a vital part of helping prevent risky or dangerous health behaviors [4]. Furthermore, susceptibility to the adaptation of dangerous behaviors is an important factor in public health administration. Psychological problems and rebelliousness are related to increased susceptibility. The perception of e-cigarettes as addictive and harmful serves as a protective factor [6].
-
-These varied demographics and their motives for using e-cigarettes have been the subject of research. To discover the inter-relationships between vaping and smoking, as well as between perceptions and usage, several papers have sought to integrate information on perceived danger of e-cigarettes with reported e-cigarette and cigarette use from surveys [7,8]. According to assessments of the 2012 National Youth Tobacco Survey, perceptions that e-cigarettes are less dangerous than traditional cigarettes are also a major predictor of e-cigarette use among teenagers, even those who have never used cigarettes [9]. 
-
-Previous literature has found that perceived relative risk on non-combustible nicotine products is extremely diverse by product type and among sub-populations after conducting a comprehensive review of the literature on risk perceptions across nicotine products. During several of the time periods analyzed in the various research, relative risk perceptions for e-cigarettes, which represent the newest entrance into the market for non-combustible nicotine products, appear to better reflect epidemiological evidence than for other tobacco products [10]. This is natural, as it is documented that different subgroups often have different preferences that affect their choices for using cigarettes, e-cigarettes, and variations of each, or simply neither [10,11].
-
-Cigarette smokers who did not want to stop had higher nicotine dependency, poorer quitting self-efficacy, and worse socioeconomic level than smokers who do intend to quit [12].
-
-
-
 \section{Methodology} \label{sec:methodology}
 
+\hspace{5mm}We sought to implement four different, unique nonlinear dimension reduction techniques on seperate, real-world data sets. The group decided on the following arrangement: Jacob would work on Isomap and Local Linear Embedding, Ruirui implementing the Diffusion map algorithm, and Shrey investigating the properties of the T-SNE method. Each of these methods presents their own set of pro's and con's, which we had to navigate around. Thus, this was not a simple cut-and-paste approach to this paper.  
 
-\subsection{Theoretical Model}
+
+
+\section{Local Linear Embedding} \label{sec:Local Linear Embedding}
+
+
+\subsection{Approach}
 \hspace{5mm}We seek to extend a Bayesian learning context for the usage and development of a theoretical model, from which we can test our empirical model on. Consider the set $N$ to be the set of agents in the game. Let $\Omega$ denote the state space of a system, where $\sum\limits_{i=1}^{n}a_i=1$ denotes that the probability of all actions in the state space must sum to one, and we'll assume $\Omega$ is finite. For each player $i\in N$, there exists the set $A_i$ (the set of actions available to player $i$). Each player $i$ holds a prior belief of the state of nature given by a probability measure $p_i$ on $\Omega$. In our case, an agent holds a prior perception of e-cigarettes, which can be either positive, neutral, or negative. This degree will vary and can take on any value within $[-1,1]$. 
 
 At any given point of play during the game, some state $\omega\in\Omega$ is realized, such that a user has gained new information of the EVALI crisis, and has updated their prior beliefs. Thus, we seek to model a players decision making process under uncertainty. Define a profile called $\gamma_i$ of a standard signal function, and denote $\gamma_i(\omega)$ to be the agent observing a signal of a state of nature. Assume the agent has a $k$x$1$ vector denoting the personal characteristics for each agent, which are likely to affect their belief states. Define $T_i$ to be the different types of players. I define $p_i(\gamma_i^{-1}(t_i))>0$ $\forall$ $t_i\in T_i$, where a player $i$ assigns positive prior probability to every member of $T_i$.
 
 
-\subsection{Empirical Model}
+\subsection{Results}
 
-\subsubsection{Data}
+\section{Diffusion Map} \label{sec: Diffusion Map}
 
-\hspace{5mm}The data for this study comes from the National Youth Tobacco Survey(NYTS) over the course of three years: 2018, 2019, and 2020. The surveyors collect data on teenagers' tobacco-related knowledge, perceptions, and behaviours across the country. The NYTS is an annual survey of middle and high school students performed by the Centers for Disease Control and Prevention (CDC). Its approach has already been discussed. The CDC's institutional review board approved its design. The study included children in grades 6–12 who were enrolled in a public, secular, or religious private school in the United States. A stratified, cluster sample was used, with the goal of oversampling non-Hispanic Black and Hispanic kids. Both at the school and student levels, participation was entirely optional.
+\subsection{Approach}
 
-\subsubsection{Outcome Measure}
+\subsection{Results}
 
-\hspace{5mm}The outcome measure we are seeking to explain is blank. Students' demographic profile, tobacco usage and views, along with their smoking cessation strategy were all independent factors. Students' sex, age, and ethnicity were among the demographic factors. Non-Hispanics were further categorised as Black, White, Asian, or those of another or many races, depending on their ethnicity.
+\section{T-SNE} \label{sec: T-SNE}
+\subsection{Approach}
 
-Adolescents' attitudes of tobacco's dangers were also examined. Students were asked how strongly they agreed with the statement "All tobacco products are hazardous," to which they may reply "strongly agree," "agree," "disagree," or "strongly disagree" on a four-point Likert scale. Students were also asked if they thought "electronic cigarettes, or e-cigarettes, such as Ruyan or NJOY, are less dangerous, similarly harmful, or more harmful than normal cigarettes?" Students could answer they'd "never heard of electronic cigarettes or e-cigarettes" or "didn't know enough about these goods" if they chose one of these alternatives.
+\subsection{Results}
 
-\subsubsection{Descriptive Statistics}
+\section{Isomap} \label{sec: Isomap}
+\subsection{Approach}
 
-\hspace{5mm}We run a variety of tests to generate a panel of descriptive statistics from which we can observe and make note of trends in our data. 
+\subsection{Results}
 
-\subsubsection{Statistical Analysis}
 
-\hspace{5mm}I seek to employ a stochastic model to obtain
-
-\section{Results} \label{sec:result}
-
-\hspace{5mm}We first begin by defining the model's components. 
-
-\hspace{5mm}Overall
 \section{Discussion} \label{sec:discussion}
 
 \hspace{5mm}Many teens in the United States report being exposed to e-cigarette marketing messages via a number of outlets. Ads for e-cigarettes may impact teenage beginning of e-cigarette usage. According to the findings of this study, exposure to e-cigarette ads can also impact teenagers' risk perception of smoking cigarettes, which is a strong predictor of smoking start (Roditis et al., 2016; Song et al., 2009). Youth who've never-smoked and were exposed to e-cigarette commercials reported considerably decreased perceived hazards of smoking cigarettes. Regulating the platforms and material of e-cigarette marketing should be examined in order to reduce teenage exposure and the potentially negative impacts on nonsmokers. 
@@ -126,7 +112,7 @@ Additionally, the NYTS data contains a relatively restricted set of sociodemogra
 
 \newpage
 \begin{thebibliography}{}
-\bibitem{First Entry}Alber, Julia M et al. “Examining e-cigarette perspectives before and after the EVALI peak in cases.” Addictive behaviors vol. 119 (2021): 106939. doi:10.1016/j.addbeh.2021.106939
+\bibitem{First Entry}Fannjiang, Albert, and Wenjing Liao. "Coherence pattern–guided compressive sensing with unresolved grids." SIAM Journal on Imaging Sciences 5.1 (2012): 179-202.
 
 \bibitem{increase news coverage EVALI}Leas, Eric C et al. “Self-reported Cannabidiol (CBD) Use for Conditions With Proven Therapies.” JAMA network open vol. 3,10 e2020977. 1 Oct. 2020, doi:10.1001/jamanetworkopen.2020.20977
 
@@ -168,9 +154,9 @@ Additionally, the NYTS data contains a relatively restricted set of sociodemogra
 
 
 \section{Funding Statement}
-Funding for this study was provided by the Georgia Institute of Technology Presidential Undergraduate Research Award. Georgia Tech held no role in the study design, collection, analysis or interpretation of the data, writing the manuscript, or the decision to submit the paper for publication.
+Funding for this study was provided by the Georgia Institute of Technology Presidential Undergraduate Research Award. Georgia Tech held no role in the study design, collection, analysis or interpretation of the data, writing the manuscript, or the decision to submit the paper for publication. No co-author held any accompanying grants for this work. 
 
 \section{Disclaimer}
-The findings and conclusions in this report are those of the author and do not necessarily represent the official position of the Georgia Institute of Technology or any of its affiliated institutions or agencies. This article was prepared while Jacob Aguirre was an undergraduate student at the Georgia Institute of Technology, School of Economics. 
+The findings and conclusions in this report are those of the authors and do not necessarily represent the official position of the Georgia Institute of Technology or any of its affiliated institutions or agencies. This article was prepared while Jacob Aguirre was an undergraduate student at the Georgia Institute of Technology, School of Economics and Mathematics. 
 
 \end{document}
