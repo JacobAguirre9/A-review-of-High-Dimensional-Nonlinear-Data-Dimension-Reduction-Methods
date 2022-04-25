@@ -60,7 +60,7 @@ Machine learning can assist us in comprehending enormous amounts of data and mak
 
 In this work, we will seek to focus on 4 different methods. These are Isomap, T-SNE, Diffusion Maps, and Local Linear Embedding [2]. Each presents it's own unique methodology, pros, and cons. Within this report, we will, of course, provide the necessary background and prerequisite knowledge needed to understand each method. We will make sure to focus specifically on the applications, how well our methods worked, and the limitations with each. 
 
-The rest of this paper is as follows: Section 2 introduces background of existing literature of nonlinear dimension reduction methods; Section 4 is split into 4 subsections, each discussing a different algorithm and the corresponding methodology. Section 4 provides a commentary of the results, as well as supplying an analytic approach to decide whether our hypothesis was correct for nonlinear dimension reduction methods; Section 5 presents concluding remarks and avenues of future research. Attached is an appendix, which will have all the graphs, charts, and tables we created.
+The rest of this paper is as follows: Section 2 introduces background of existing literature of nonlinear dimension reduction methods; Section 3 is split into 4 subsections, each discussing a different algorithm and the corresponding methodology. Section 4 provides a commentary of the results, as well as supplying an analytic approach to decide whether our hypothesis was correct for nonlinear dimension reduction methods; Section 5 presents concluding remarks and avenues of future research. Attached is an appendix, which will have all the graphs, charts, and tables we created.
 
 
 \section{Methodology} \label{sec:methodology}
@@ -71,6 +71,16 @@ Each of a data set's nominal features can be enumerated, or mapped to an element
 
 We now consider the case of facial images. Often times for image reconstruction or computational inverse problems, the data set will require us to center, or normalize, the data. This equates to us taking the mean of the data, and subtracting it from the original dataset. Formally, this is written as $\textbf{X}'_j=\textbf{X}_j-\mu_j\textbf{1}_n$ where $[\textbf{X}]_{n x f}$ is a data set, $\textbf{X}_j$ is the $j^{th}$ column of $\textbf{X}$, and $\mu_j$ is the mean of $\textbf{X}_j$. Further, $\textbf{1}_n$is a column vector of 1's. Thus, $\textbf{X'}_j$ is a normalized data set where each column has mean 0.
 
+
+We now seek to explain the Covariance Matrix of features for a centered data set. Consider $\textbf{X}$ to be a data set, $\textbf{X'}$ to be the same data set $\textbf{X}$ except it has the features centered. Formally, this would be written as $\textbf{X}'=\textbf{HX}$. Also, consider the matrix $\textbf{X}'_j$ to be the $j^{th}$ feature column of the centered data set.
+
+We accept the following identity to be true, and do not prove it in the appendix. Given a data set $\textbf{X}$, we have that the covariance between pairs of features is given by a matrix $\sum_X=[\sigma_{xy}]_{nxn}=\frac{1}{n}\textbf{X}^T\textbf{HX}$. This assumption will allow us to better easily implement the algorithms in the paper. 
+
+\subsection{Topology and Manifolds}
+
+Formally, we can consider a manifold to be a set $M$ to be a $n-$dimensional topological manifold $\iff$ $\forall p\in M,p\in U_p$ where $U_p$ is an open set homeomorphic to an open set $V_p$ in the Euclidean space $\mathbb{R}^n.$ The properties of a manifold and it's Atlas are important when we discuss our nonlinear dimension techniques, with emphasis for Local Linear Embedding.
+
+For example, consider two sets $A$ and $B$, such that they are both two seperate topological objects, and a function $\psi:A\to B$ would be considered an "embedding" of $A\to B$. We will not prove any further assumptions, and any such statements in the report are left to the reader as an exercise. 
 
 
 \section{Local Linear Embedding} \label{sec:Local Linear Embedding}
@@ -97,6 +107,17 @@ At any given point of play during the game, some state $\omega\in\Omega$ is real
 
 \section{Isomap} \label{sec: Isomap}
 \subsection{Approach}
+
+\hspace{5mm}The Isomap Method.
+
+\subsubsection{Notation}
+\hspace{5mm}\text We begin by defining the notation that will be utilized within the algorithm to compute an Isomap. Consider a matrix $\textbf{H}$ named the centering matrix. This is only the centering matrix after a multiplication by a given matrix $\textbf{X}$. This produces an effect of subtracting the mean of the components from each in $\textbf{X}$. Formally, $\textbf{H}$ is given by 
+
+\text{$\textbf{H}=\textbf{I}_n-\frac{1}{n}\textbf{11}^T,$where}
+
+\text{$\textbf{I}_n$ is the Identity matrix and $\textbf{1}$ is the column vector filled with $1's$.}
+
+\text{}
 
 \subsection{Results}
 
