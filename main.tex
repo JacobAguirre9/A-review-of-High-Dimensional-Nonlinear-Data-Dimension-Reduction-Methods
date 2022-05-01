@@ -63,24 +63,9 @@ In this work, we will seek to focus on 4 different methods. These are Isomap, T-
 The rest of this paper is as follows: Section 2 introduces background of existing literature of nonlinear dimension reduction methods; Section 3 is split into 4 subsections, each discussing a different algorithm and the corresponding methodology. Section 4 provides a commentary of the results, as well as supplying an analytic approach to decide whether our hypothesis was correct for nonlinear dimension reduction methods; Section 5 presents concluding remarks and avenues of future research. Attached is an appendix, which will have all the graphs, charts, and tables we created.
 
 
-\section{Methodology} \label{sec:methodology}
-
-\hspace{5mm}Often times, we are presented with a data set and told to find causal inferences within. We seek to group data, make hypotheses, draw conclusions, and present our results. Formally, a dataset can be given by the following: $X:=[x_{ij}]|x_{ij}\in f_j,\forall i\in[1,|S|],\forall j\in[1,|F|]$ [3]. This is important to know, as most of the data sets we used follow this description. Consider a dataset $X$ with $n$ observations and $p$ variables. Thus, $X$ is a $n$x$p$ matrix. It follows that each row corresponds to an observation, and each column in this matrix is a unique feature. 
-
-Each of a data set's nominal features can be enumerated, or mapped to an element of $\mathbb{N}$. A collection of vectors in the $\mathbb{R}^n$ could then be used to express such a set. High dimensional data is often unique, and different from some of the data sets we normally encounter. Consider that with a high dimensional data, the number of samples is high, alongside the number of features.
-
-We now consider the case of facial images. Often times for image reconstruction or computational inverse problems, the data set will require us to center, or normalize, the data. This equates to us taking the mean of the data, and subtracting it from the original dataset. Formally, this is written as $\textbf{X}'_j=\textbf{X}_j-\mu_j\textbf{1}_n$ where $[\textbf{X}]_{n x f}$ is a data set, $\textbf{X}_j$ is the $j^{th}$ column of $\textbf{X}$, and $\mu_j$ is the mean of $\textbf{X}_j$. Further, $\textbf{1}_n$is a column vector of 1's. Thus, $\textbf{X'}_j$ is a normalized data set where each column has mean 0.
+\section{Literature Review}
 
 
-We now seek to explain the Covariance Matrix of features for a centered data set. Consider $\textbf{X}$ to be a data set, $\textbf{X'}$ to be the same data set $\textbf{X}$ except it has the features centered. Formally, this would be written as $\textbf{X}'=\textbf{HX}$. Also, consider the matrix $\textbf{X}'_j$ to be the $j^{th}$ feature column of the centered data set.
-
-We accept the following identity to be true, and do not prove it in the appendix. Given a data set $\textbf{X}$, we have that the covariance between pairs of features is given by a matrix $\sum_X=[\sigma_{xy}]_{nxn}=\frac{1}{n}\textbf{X}^T\textbf{HX}$. This assumption will allow us to better easily implement the algorithms in the paper. 
-
-\subsection{Topology and Manifolds}
-
-Formally, we can consider a manifold to be a set $M$ to be a $n-$dimensional topological manifold $\iff$ $\forall p\in M,p\in U_p$ where $U_p$ is an open set homeomorphic to an open set $V_p$ in the Euclidean space $\mathbb{R}^n.$ The properties of a manifold and it's Atlas are important when we discuss our nonlinear dimension techniques, with emphasis for Local Linear Embedding.
-
-For example, consider two sets $A$ and $B$, such that they are both two seperate topological objects, and a function $\psi:A\to B$ would be considered an "embedding" of $A\to B$. We will not prove any further assumptions, and any such statements in the report are left to the reader as an exercise. 
 
 
 \section{Local Linear Embedding} \label{sec:Local Linear Embedding}
@@ -111,21 +96,38 @@ For example, consider two sets $A$ and $B$, such that they are both two seperate
 
 \subsection{Motivation}
 
+\hspace{5mm}Isometric Feature Mapping (or ISOMAP) was first proposed by Tenenbaum, de Silva, and Langfor, and assumes that the data is near a smooth manifold. If the assumption is sound, concepts like neighborhood and local linearity can be used to map the manifold to a linear structure before reducing it with the help of a linear algorithm. Consider that oftentimes, a nonlinear dataset might be folded or curved, such is the often the shape of a manifold [5]. 
+
+
 \subsection{Approach}
+\hspace{5mm}For my review of the Isomap approach, let $\textbf{S}$ be the simulated data in the shape of a Swiss roll. A picture of the data is presented below and in the supplementary materials. Full code can be found hosted on github.
+
+\begin{figure}[h!]
+\centering    
+\includegraphics[width=100mm]{swissroll1.png}
+\caption{Swiss Roll, N=1000, features=3}
+\label{fig: Swiss Roll}
+\end{figure}
+
+\subsubsection{Construction of Algorithm}
+
+\hspace{5mm}The basis of the algorithm can be described in 3 main points. Consider a dataset $\textbf{S}$ and let $p\in\mathbb{R}^n$ be the number of features we want to include in the reduced data [5].
+
+\begin{enumerate}
+    \item Procedure of Algorithm
+    \begin{itemize}
+        \item Construct a weighted graph \textbf{G} from the distances pairwise to some \newline$\delta_{xy},\forall (\textbf{x},\textbf{y})\in \textbf{X} \times \textbf{X},\textbf{x}\neq\textbf{y}.$ Next, we need to find the graph $G^{''}$ by applying a nearest neighbor algorithm on the graph $G$.
+        \item Compute a shortest path graph $G^{''}$ between all pairs of nodes from the graph $G^'$.\newline For this computation, we make use of Dijkstra’s algorithm.
+        \item Lastly, use $G^{''}$ to construct the $p$-dimensional embedding by using the Multidimensional scaling algorithm.
+    \end{itemize}
+\end{enumerate}
+
+\hspace{5mm}
 
 \subsection{Results}
 
 
 \hspace{5mm}The Isomap Method.
-
-\subsubsection{Notation}
-\hspace{5mm}\text We begin by defining the notation that will be utilized within the algorithm to compute an Isomap. Consider a matrix $\textbf{H}$ named the centering matrix. This is only the centering matrix after a multiplication by a given matrix $\textbf{X}$. This produces an effect of subtracting the mean of the components from each in $\textbf{X}$. Formally, $\textbf{H}$ is given by 
-
-\text{$\textbf{H}=\textbf{I}_n-\frac{1}{n}\textbf{11}^T,$where}
-
-\text{$\textbf{I}_n$ is the Identity matrix and $\textbf{1}$ is the column vector filled with $1's$.}
-
-\text{}
 
 \subsection{Results}
 
@@ -141,7 +143,23 @@ For example, consider two sets $A$ and $B$, such that they are both two seperate
 
 Thus, this caused for us to seek out nonlinear dimension reduction techniques. For this, we utilized the following: T-SNE, Isomap, Diffusion Maps, and Local Linear Embedding (LLE). We found that each method had their merits and difficulties. For example, the isomap represents a step forward in manifold learning and was a widely used dimensionality reduction method until recently. Currently, Uniform Manifold Approximation and Projection (UMAP) had begun to take over the literature. In practice, its relevance can be seen in the large number of machine learning libraries, languages, and computational environments that use it, as well as the large amount of research done by numerous authors attempting to apply, improve, or expand it.
 
-We end by concluding that this study was overall quite successful. We showed a multitude of different techniques, how well they will perform or fail on given data sets, and what to consider when using them. It's always important to note that within the realm of data science and statistical inference, a "one method fits all" approach is likely to fail. You must always be aware of the particularities within your dataset, and constantly tryout new methods to explore and find causal inference within. This 
+We end by concluding that this study was overall quite successful. We showed a multitude of different techniques, how well they will perform or fail on given data sets, and what to consider when using them. It's always important to note that within the realm of data science and statistical inference, a "one method fits all" approach is likely to fail. You must always be aware of the particularities within your dataset, and constantly tryout new methods to explore and find causal inference within. Thus, we kept this in mind when we performed all of our approaches and simulations.
+
+\subsection{Future work}
+\hspace{5mm}This project has taught us a great deal about the nature of nonlinear dimension reduction methods. This report has inspired us to continue further work in this area, and encouraged us to read journal papers related to the area. In doing so, we stumbled upon the evergrowing popular method, "Uniform Manifold Approximation and Projection" (UMAP) algorithm proposed again by Tenenbaum [12].
+
+This algorithm can be considered seriously competitive with t-SNE for it's amazing visualization quality, and can actually manipulate the global structure more accurately. Below is a figure from a recent article written by a group of scientists from Johns Hopkins University [13]. As you can see, the data is formatted perfectly, and is much cleaner than t-SNE. 
+
+\begin{figure}[h!]
+\centering    
+\includegraphics[width=100mm]{umap pic.jpg}
+\caption{UMAP on cellular data}
+\label{fig: UMAP}
+\end{figure}
+
+
+
+
 
 \newpage
 \begin{thebibliography}{}
@@ -175,14 +193,15 @@ Kaufmann, 1996.
 \bibitem{semi-supervised learning}X. Zhu and A. B. Goldberg, “Introduction to semi-supervised learning,” Synthesis lectures on artificial intelligence and machine learning, vol. 3, no. 1,
 pp. 1–130, 2009
 
+\bibitem{UMAP}McInnes, Leland, John Healy, and James Melville. "Umap: Uniform manifold approximation and projection for dimension reduction." arXiv preprint arXiv:1802.03426 (2018).
+
+\bibitem{umap JHU}shorturl.at/clIQS
 
 \end{thebibliography}
 
 
-\section{Funding Statement}
-Funding for this study was provided by the Georgia Institute of Technology Presidential Undergraduate Research Award. Georgia Tech held no role in the study design, collection, analysis or interpretation of the data, writing the manuscript, or the decision to submit the paper for publication. No co-author held any accompanying grants for this work. 
+\section{Supplementary materials}
 
-\section{Disclaimer}
-The findings and conclusions in this report are those of the authors and do not necessarily represent the official position of the Georgia Institute of Technology or any of its affiliated institutions or agencies. This article was prepared while Jacob Aguirre was an undergraduate student at the Georgia Institute of Technology, School of Economics and Mathematics. 
+Try and put your tables, charts, images here! Simply cite them up top when you're writing your sections. Thanks :D
 
 \end{document}

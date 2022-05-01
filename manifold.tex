@@ -1,0 +1,18 @@
+\section{Methodology} \label{sec:methodology}
+
+\hspace{5mm}Often times, we are presented with a data set and told to find causal inferences within. We seek to group data, make hypotheses, draw conclusions, and present our results. Formally, a dataset can be given by the following: $X:=[x_{ij}]|x_{ij}\in f_j,\forall i\in[1,|S|],\forall j\in[1,|F|]$ [3]. This is important to know, as most of the data sets we used follow this description. Consider a dataset $X$ with $n$ observations and $p$ variables. Thus, $X$ is a $n$x$p$ matrix. It follows that each row corresponds to an observation, and each column in this matrix is a unique feature. 
+
+Each of a data set's nominal features can be enumerated, or mapped to an element of $\mathbb{N}$. A collection of vectors in the $\mathbb{R}^n$ could then be used to express such a set. High dimensional data is often unique, and different from some of the data sets we normally encounter. Consider that with a high dimensional data, the number of samples is high, alongside the number of features.
+
+We now consider the case of facial images. Often times for image reconstruction or computational inverse problems, the data set will require us to center, or normalize, the data. This equates to us taking the mean of the data, and subtracting it from the original dataset. Formally, this is written as $\textbf{X}'_j=\textbf{X}_j-\mu_j\textbf{1}_n$ where $[\textbf{X}]_{n x f}$ is a data set, $\textbf{X}_j$ is the $j^{th}$ column of $\textbf{X}$, and $\mu_j$ is the mean of $\textbf{X}_j$. Further, $\textbf{1}_n$is a column vector of 1's. Thus, $\textbf{X'}_j$ is a normalized data set where each column has mean 0.
+
+
+We now seek to explain the Covariance Matrix of features for a centered data set. Consider $\textbf{X}$ to be a data set, $\textbf{X'}$ to be the same data set $\textbf{X}$ except it has the features centered. Formally, this would be written as $\textbf{X}'=\textbf{HX}$. Also, consider the matrix $\textbf{X}'_j$ to be the $j^{th}$ feature column of the centered data set.
+
+We accept the following identity to be true, and do not prove it in the appendix. Given a data set $\textbf{X}$, we have that the covariance between pairs of features is given by a matrix $\sum_X=[\sigma_{xy}]_{nxn}=\frac{1}{n}\textbf{X}^T\textbf{HX}$. This assumption will allow us to better easily implement the algorithms in the paper. 
+
+\subsection{Topology and Manifolds}
+
+Formally, we can consider a manifold to be a set $M$ to be a $n-$dimensional topological manifold $\iff$ $\forall p\in M,p\in U_p$ where $U_p$ is an open set homeomorphic to an open set $V_p$ in the Euclidean space $\mathbb{R}^n.$ The properties of a manifold and it's Atlas are important when we discuss our nonlinear dimension techniques, with emphasis for Local Linear Embedding.
+
+For example, consider two sets $A$ and $B$, such that they are both two seperate topological objects, and a function $\psi:A\to B$ would be considered an "embedding" of $A\to B$. We will not prove any further assumptions, and any such statements in the report are left to the reader as an exercise. 
