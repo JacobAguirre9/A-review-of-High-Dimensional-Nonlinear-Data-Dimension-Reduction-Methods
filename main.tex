@@ -1,4 +1,4 @@
-\documentclass[12pt]{article}
+\documentclass[11pt]{article}
 
 \usepackage{amssymb,amsmath,amsfonts,eurosym,geometry,ulem,graphicx,caption,color,setspace,sectsty,comment,footmisc,caption,natbib,pdflscape,subfigure,array,hyperref}
 
@@ -22,7 +22,7 @@
 \newcolumntype{R}[1]{>{\raggedleft\let\newline\\arraybackslash\hspace{0pt}}m{#1}}
 
 
-\geometry{left=1.2in,right=1.2in,top=1.0in,bottom=1.0in}
+\geometry{left=1.2in,right=1.2in,top=.8in,bottom=1.0in}
 
 \begin{document}
 
@@ -68,14 +68,17 @@ The rest of this paper is as follows: Section 2 introduces background of existin
 The underlying neighbor-graph construction technique is common to many dimension reduction techniques.
 Several non-linear dimension reduction techniques make the same initial assumption: suppose $X =\{x_1,..., x_n\}$ is a set of points lying on a manifold $\mathcal{M}$ embedded in ambient $\mathbb{R}^D$space. This manifold $\mathcal{M}$ is of a lower-dimension than $\mathbb{R}^D$, but it is not observed; only samples from this manifold are available (the observed X). From this discrete subset $X$, we seek to recover the manifold structure of $\mathcal{M}$.
 
+This is one of many foundational questions that statisticians, mathematicians, and engineers seek to answer. How can we best represent some data set on a low-dimensional manifold, such that we can recover some underlying features, recover a vector, or perform topological data analysis techniques more efficiently. One article presents a novel way of looking at the geometric structure of high dimensional data, and how this presents new frontiers of exploring dimension reduction algorithms [5]. A much smaller paper written in 2005 presents ways for us to explore these different methods, and goes much deeper in explaining multidimensional scaling [7,8].
 
+t-SNE has been considered one of, if not the best, nonlinear dimension reduction methods that efficiently helped data scientists, statisticians, and researchers best visualize their data sets [16]. As Shrey writes in his results section, the model performed quite well on his Crime data set. t-SNE essentially allows for us to use a student t-distribution and model the probabilities of points in a low dimensional space, resolving the issue of SNE. 
 
+Our paper adds to the literature in two main ways: First, this paper provides a deep understanding and comprehensible report of some of the best nonlinear dimension reduction methods currently being discussed and developed today. Secondly, we provide knowledge and background on how to efficiently choose which model would best work for a given data set. This would save a researcher much headache later on during implementation. Finally, we provide easy to understand code which is parsedt through and allows for a reader to understand our implementation techniques.
 
 \section{Local Linear Embedding} \label{sec:Local Linear Embedding}
 
 \subsection{Motivation}
 \hspace{5mm}
-The beauty of the Local Linear Embedding algorithm lies in it's simple, geometric intuitions. This allows for both ease of understanding and implementation of the algorithm on real world data projects. Below, we seek to summarize how this algorithm works.
+The beauty of the Local Linear Embedding algorithm lies in it's simple, geometric intuitions [8]. This allows for both ease of understanding and implementation of the algorithm on real world data projects. Below, we seek to summarize how this algorithm works.
 
 \begin{enumerate}
     \item Procedure of Algorithm
@@ -93,25 +96,88 @@ The beauty of the Local Linear Embedding algorithm lies in it's simple, geometri
 \end{enumerate}
 
 \subsection{Approach}
+\hspace{5mm}The approach for reviewing Local Linear Embedding was relatively simplistic. For this, I developed an algorithm that follows the basic methodology of the seminar LLE paper written by [12]. Then, I sought to apply this algorithm to the MNIST data set [13]. The MNIST database of handwritten digits, available from this page, has a training set of 60,000 examples, and a test set of 10,000 examples. It is a subset of a larger set available from MNIST. The digits have been size-normalized and centered in a fixed-size image.
+
+MNIST provides an excellent demonstration on how well LLE provides a visualization of a given data set. One big topic that also is mentioned heavily in this literature is how well nonlinear dimension reduction helps in classification problems. Thus, I wanted to also perform LLE on the MNIST dataset, and compare how well it would perform with logistic regression classification without prior LLE. The results for the models are fitted below and can be found in the supplementary materials.
+
+
+
 
 \subsection{Results}
 
 \section{Diffusion Map} \label{sec: Diffusion Map}
 
 \subsection{Motivation}
-Diffusion map is a computationally inexpensive non-linear dimensionality reduction technique that seeks to discover lower-dimensional structure embedded in high-dimensional data space. It finds a diffusion map that maps points in high dimensional data space onto lower dimensional diffusion space so that finding the euclidean distance in the diffusion space is equivalent in finding the diffusion distance in data space, which effectively mitigates the curse of dimensionality.
+\hspace{5mm}Diffusion map is a computationally inexpensive non-linear dimensionality reduction technique that seeks to discover lower-dimensional structure embedded in high-dimensional data space. It finds a diffusion map that maps points in high dimensional data space onto lower dimensional diffusion space so that finding the euclidean distance in the diffusion space is equivalent in finding the diffusion distance in data space. This effectively mitigates the curse of dimensionality since euclidean distance is a good metric for lower-dimensional data.
 \subsection{Approach}
-\includegraphics[scale=0.5]{algo.png}
+\subsubsection{Naive Diffusion Map Algorithm}
+\begin{enumerate}
+    \item Construct Kernel Matrix $K$, whose entry $k_{ij}=e^{-\frac{d(x_i,x_j)^2}{\epsilon}}$ is a symmetric quantity. Note $d(x_i,x_j)$ represents the euclidean distance between $x_i$ and $x_j$ in data space, and $\epsilon$ is a hyperparameter that determines the size of $\epsilon-neighborhood$.
+    \item Construct the Diffusion Matrix $P$, whose entry $p(x_i,x_j)=\frac{1}{d_X}k(x_i,x_j)$, where $\frac{1}{d_X}\underset{{x_j\in X}}{\sum}k(x_i,x_j)=1$. Thus, we can construct $P$ by row-normalizing $K$. Suppose diagonal matrix $D$ such that $D_{ii}$ equals the $i^{th}$ row sum of $K$, then $P = D^{-1}K$.
+    \item Apply the diffusion process for $t$ time steps on $P_{sym}$,  which is done by taking $P_{sym}$ to the $t^{th}$ power.
+    \item Though $P$ is theoretically symmetric, it might in fact be non-symmetric in computer due to floating-point errors. Thus, we need to symmetrize $P$ to ensure that it has all real eigenvalues and orthogonal eigenvectors. We do so by $P_{sym} = D^{\frac{1}{2}}PD^{-\frac{1}{2}}$.
+    \item Perform Eigen-Decomposition on $P_{sym}$ and pick the $k$ dominant eigenvalue's eigenvector $V=[v_1,\dots,v_k]$. Return $D^{-\frac{1}{2}}V$ to represent diffusion space due to the symmetrization process described in step 4.
+\end{enumerate}
+I used my naive implementation of the diffusion map to perform dimension reduction on simulated data. I experimented with different $\epsilon$ and $t$ values to reduce the 3-dimensional swiss roll to a 2-dimensional plane. For the more complex real world data, I used the diffusion map implementation from pydiffmap library, which used knn graph instead of $\epsilon$-neighborhood graph, to explore the underlying low-dimensional structure of a dataset of rotating pictures.  
+\
 \subsection{Results}
-
+Figure 1 showcase the Naive Diffusion Map dimension reduction results on swiss roll data with different combinations of $\varepsilon$ and $t$. As the results indicate, the size of $\epsilon$-neighborhood heavily influences the low-dimensional structure the diffusion map discovers. This makes sense because $\epsilon$ dictates the scope in which a data point can integrate local similarities, which constitutes the global description of the data after dimension reduction. Further, the diffusion time steps also influence the results. As we increase the diffusion time steps, the transition probability from $x_i$ to $x_j$ in the data stabilizes to reveal the true relation between them: a low $p^t(x_i,x_j)$ implies are distant and a high $p^t(x_i,x_j)$ implies otherwise. However, applying too many time steps could result in loss of information since $p^t(x_i,x_j)\rightarrow 0$. In this particular example, $\epsilon=0.18$ and $t=2^{10}$ “unrolls" the 3-d swiss roll nicely.
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.4]{naive_results.png}
+\caption{Naive Diffusion Map Dimension Reduction on Swiss Roll data}
+\label{fig: t_SNE before standardizing}
+\end{figure}
 \section{T-SNE} \label{sec: T-SNE}
 \subsection{Motivation}
 \hspace{5mm}t-Distributed Stochastic Neighbor Embedding (t-SNE) forms a lower dimensional embedding using probability distributions to compute similarities between points across different dimensional spaces. By using a Student t-distribution to model the probabilities of points in the low dimensional space (LDS), t-SNE resolves the issue of SNE, which misrepresents dissmilar points in the high dimensional space (HDS) as close or related points in the LDS.
 
 \subsection{Approach}
-\hspace{5mm}While I used the "TSNE" function provided by the Python "sklearn.manifold" library, I will describe the t-SNE algorithm below.
+\hspace{5mm}While I used the "TSNE" function provided by the Python "sklearn.manifold" library, I will describe the t-SNE algorithm below [16].
+\begin{enumerate}
+    \item Define Parameters:\newline
+    Given your dataset $X = \{x_1, x_2, ..., x_n\}$, define the following parameters: Perplexity $P$, number of iterations $T$, learning rate $\eta$, and momentum $\alpha(t)$. Also define your target dataset as randomly initialized data in the LDS as $Y = \{y_1, y_2, ..., y_n\}$. The length of the $y_i's$ is determined by how many features you want the LDS to consist of.
+    \item Compute Pairwise Conditional Probabilities in the HDS:\newline
+    Use the following equation to compute the conditional probability that $x_i$ would select $x_j$ as its neighbor under a Gaussian distribution with $x_i$ as its center and a predefined variance $\sigma^2_i$. This is known as the similarity of $x_j$ to $x_i$, and the number of neighbors $x_j$ selected is $P$.
+    \begin{align}
+        p_{j|i} = \frac{\exp(-||x_i - x_j||^2/2\sigma_i^2)}{\sum_{k\not=i}\exp(-||x_i - x_k||^2/2\sigma_i^2)}.
+    \end{align}
+    To adjust for outliers in the HDS, we redefine these similarities to symmetrize them as
+    \begin{align*}
+        p_{ij} = \frac{p_{j|i} + p_{i|j}}{2n}.
+    \end{align*}
+    \item Gradient Descent with LDS Similarities:\newline
+    Now we will begin the iterations as we perform gradient descent. The following process will be computed for each of the $T$ iterations. As we defined our similarities for the points in the HDS, we will similarly define the similarities of the points in the LDS with the following equation:
+    \begin{align}
+        q_{ij} = \frac{(1 + ||y_i - y_j||^2)^{-1}}{\sum_{k\not=l} (1 + ||y_k - y_l||^2)^{-1}}.
+    \end{align}
+    We will use the Kullback-Leibler divergence between the similarities in the HDS and the similarities in the LDS as our cost function $C$, measuring the difference of the two similarities. We compute the gradient of this cost as
+    \begin{align}
+        \frac{\delta C}{\delta y_i} =  4\sum_j (p_{ij} - q_{ij})(y_i - y_j)(1 + ||y_i - y_j||^2)^{-1}.
+    \end{align}
+    Upon computing the gradient, we can now update the LDS datapoints using gradient descent with the following equation:
+    \begin{align}
+        Y^{(t)} = Y^{(t-1)} + \eta\frac{\delta C}{\delta Y} + \alpha(t)(Y^{(t-1)} - Y^{(t-2)}).
+    \end{align}
+    \item Result:\newline
+    After computing all $T$ iterations of the gradient descent, $Y$ is now the LDS representation of $X$.
+\end{enumerate}
 
 \subsection{Results}
+\hspace{5mm}Using the "Communities and Crime" dataset ([17]), the t-SNE model constructed a 2-dimensional and a 3-dimensional embedding of the 128-dimensional data. Because it is impossible to visualize 128 dimensions, I cannot determine how well clusters and patterns in the original data is represented in the embedding, however there are distinct patterns in the embedding that likely reflect the original data as seen in 2-dimensional and 3-dimensional figures below.
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.6]{tsne before standardizing.png}
+\caption{2-D t-SNE embedding of Communities and Crime data}
+\label{fig: t_SNE before standardizing}
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.35]{3d tsne.png}
+\caption{3-D t-SNE embedding of Communities and Crime data}
+\label{fig: 3d t_SNE before standardizing}
+\end{figure}
 
 \section{Isomap} \label{sec: Isomap}
 
@@ -169,14 +235,14 @@ Diffusion map is a computationally inexpensive non-linear dimensionality reducti
 \subsection{Limitations}
 \hspace{5mm}For this brief report, we sought to discuss the topic of nonlinear dimensionality reduction. First, we effectively reduced, displayed, and learnt from well-known data sets by focusing on linear algorithms and their ability to extract features that optimize variance in a data set. In addition, we illustrated how these techniques would not be able to decrease data sets with a nonlinear distribution.
 
-Thus, this caused for us to seek out nonlinear dimension reduction techniques. For this, we utilized the following: T-SNE, Isomap, Diffusion Maps, and Local Linear Embedding (LLE). We found that each method had their merits and difficulties. For example, the isomap represents a step forward in manifold learning and was a widely used dimensionality reduction method until recently. Currently, Uniform Manifold Approximation and Projection (UMAP) had begun to take over the literature. In practice, its relevance can be seen in the large number of machine learning libraries, languages, and computational environments that use it, as well as the large amount of research done by numerous authors attempting to apply, improve, or expand it.
+Thus, this caused for us to seek out nonlinear dimension reduction techniques. For this, we utilized the following: T-SNE, Isomap, Diffusion Maps, and Local Linear Embedding (LLE). We found that each method had their merits and difficulties. For example, the Isomap represents a step forward in manifold learning and was a widely used dimensionality reduction method until recently. Currently, Uniform Manifold Approximation and Projection (UMAP) had begun to take over the literature. In practice, its relevance can be seen in the large number of machine learning libraries, languages, and computational environments that use it, as well as the large amount of research done by numerous authors attempting to apply, improve, or expand it.
 
 We end by concluding that this study was overall quite successful. We showed a multitude of different techniques, how well they will perform or fail on given data sets, and what to consider when using them. It's always important to note that within the realm of data science and statistical inference, a "one method fits all" approach is likely to fail. You must always be aware of the particularities within your dataset, and constantly tryout new methods to explore and find causal inference within. Thus, we kept this in mind when we performed all of our approaches and simulations.
 
 \subsection{Future work}
 \hspace{5mm}This project has taught us a great deal about the nature of nonlinear dimension reduction methods. This report has inspired us to continue further work in this area, and encouraged us to read journal papers related to the area. In doing so, we stumbled upon the evergrowing popular method, "Uniform Manifold Approximation and Projection" (UMAP) algorithm proposed again by Tenenbaum [12].
 
-This algorithm can be considered seriously competitive with t-SNE for it's amazing visualization quality, and can actually manipulate the global structure more accurately. Below is a figure from a recent article written by a group of scientists from Johns Hopkins University [13]. As you can see, the data is formatted perfectly, and is much cleaner than t-SNE. 
+This algorithm can be considered seriously competitive with t-SNE for it's amazing visualization quality, and can actually manipulate the global structure more accurately. Below is a figure from a recent article written by a group of scientists from Johns Hopkins University [16]. As you can see, the data is formatted perfectly, and is much cleaner than t-SNE. 
 
 \begin{figure}[h!]
 \centering    
@@ -221,11 +287,17 @@ Kaufmann, 1996.
 \bibitem{semi-supervised learning}X. Zhu and A. B. Goldberg, “Introduction to semi-supervised learning,” Synthesis lectures on artificial intelligence and machine learning, vol. 3, no. 1,
 pp. 1–130, 2009
 
+\bibitem{LLE seminal}Roweis, Sam T., and Lawrence K. Saul. "Nonlinear dimensionality reduction by locally linear embedding." science 290.5500 (2000): 2323-2326.
+
+\bibitem{MNIST citation}Deng, L. (2012). The mnist database of handwritten digit images for machine learning research. IEEE Signal Processing Magazine, 29(6), 141–142.
+
 \bibitem{UMAP}McInnes, Leland, John Healy, and James Melville. "Umap: Uniform manifold approximation and projection for dimension reduction." arXiv preprint arXiv:1802.03426 (2018).
 
 \bibitem{umap JHU}shorturl.at/clIQS
 
 \bibitem{t-SNE}Laurens van der Maaten, and Geoffrey Hinton. “Visualizing Data Using T-SNE.” Journal of Machine Learning Research, vol. 1, 2008, pp. 1–48, www.cs.toronto.edu/$\sim\text{hinton/absps/tsne.pdf.}$
+
+\bibitem{Communities and Crime}Redmond, Michael. (2009). Communities and Crime. UCI Machine Learning Repository.
 
 
 
@@ -238,6 +310,6 @@ Try and put your tables, charts, images here! Simply cite them up top when you'r
 
 \section{Contributions}
 
-\hspace{5mm}All three of us contributed to the writing of the introduction and literature review of this report. Shrey wrote the t-SNE section, Ruirui the Diffusion map, and Jacob wrote the Local Linear embedding, Isomap, and discussion sections. 
+\hspace{5mm}All three of us contributed to the writing of the introduction of this report. Shrey wrote the t-SNE section, Ruirui the Diffusion map, and Jacob wrote the Literature review, Local Linear embedding, Isomap, and discussion sections. 
 
 \end{document}
