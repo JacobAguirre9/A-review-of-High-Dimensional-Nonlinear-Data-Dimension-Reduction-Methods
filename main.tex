@@ -22,7 +22,7 @@
 \newcolumntype{R}[1]{>{\raggedleft\let\newline\\arraybackslash\hspace{0pt}}m{#1}}
 
 
-\geometry{left=1.0in,right=1.0in,top=1.0in,bottom=1.0in}
+\geometry{left=1.2in,right=1.2in,top=1.0in,bottom=1.0in}
 
 \begin{document}
 
@@ -64,6 +64,9 @@ The rest of this paper is as follows: Section 2 introduces background of existin
 
 
 \section{Literature Review}
+\hspace{5mm}
+The underlying neighbor-graph construction technique is common to many dimension reduction techniques.
+Several non-linear dimension reduction techniques make the same initial assumption: suppose $X =\{x_1,..., x_n\}$ is a set of points lying on a manifold $\mathcal{M}$ embedded in ambient $\mathbb{R}^D$space. This manifold $\mathcal{M}$ is of a lower-dimension than $\mathbb{R}^D$, but it is not observed; only samples from this manifold are available (the observed X). From this discrete subset $X$, we seek to recover the manifold structure of $\mathcal{M}$.
 
 
 
@@ -71,6 +74,23 @@ The rest of this paper is as follows: Section 2 introduces background of existin
 \section{Local Linear Embedding} \label{sec:Local Linear Embedding}
 
 \subsection{Motivation}
+\hspace{5mm}
+The beauty of the Local Linear Embedding algorithm lies in it's simple, geometric intuitions. This allows for both ease of understanding and implementation of the algorithm on real world data projects. Below, we seek to summarize how this algorithm works.
+
+\begin{enumerate}
+    \item Procedure of Algorithm
+    \begin{itemize}
+        \item First, we need to find the K-Nearest Neighbors. The advantage of KNN is that we only have one free parameter in the entire algorithm, $k.$
+        \item We then perform a weighted aggregation of the neighbors for each point, to construct a new point. We seek to minimize the cost function presented below.
+        \begin{equation}
+            E(W)=\sum\limits_i|X_i-\sum\limits_jW_{ij}|^2 s.t. \sum\limits_jW_{ij}=1
+        \end{equation}
+        \item Now, we need to define a vector space $Y$ s.t. we minimize a new cost for Y with the new points.
+        \begin{equation}
+            C(Y)=\sum\limits_i|Y_i-\sum\limits_jW_{ij}Y_j|^2
+        \end{equation}
+    \end{itemize}
+\end{enumerate}
 
 \subsection{Approach}
 
@@ -79,15 +99,17 @@ The rest of this paper is as follows: Section 2 introduces background of existin
 \section{Diffusion Map} \label{sec: Diffusion Map}
 
 \subsection{Motivation}
-
+Diffusion map is a computationally inexpensive non-linear dimensionality reduction technique that seeks to discover lower-dimensional structure embedded in high-dimensional data space. It finds a diffusion map that maps points in high dimensional data space onto lower dimensional diffusion space so that finding the euclidean distance in the diffusion space is equivalent in finding the diffusion distance in data space, which effectively mitigates the curse of dimensionality.
 \subsection{Approach}
-
+\includegraphics[scale=0.5]{algo.png}
 \subsection{Results}
 
 \section{T-SNE} \label{sec: T-SNE}
 \subsection{Motivation}
+\hspace{5mm}t-Distributed Stochastic Neighbor Embedding (t-SNE) forms a lower dimensional embedding using probability distributions to compute similarities between points across different dimensional spaces. By using a Student t-distribution to model the probabilities of points in the low dimensional space (LDS), t-SNE resolves the issue of SNE, which misrepresents dissmilar points in the high dimensional space (HDS) as close or related points in the LDS.
 
 \subsection{Approach}
+\hspace{5mm}While I used the "TSNE" function provided by the Python "sklearn.manifold" library, I will describe the t-SNE algorithm below.
 
 \subsection{Results}
 
@@ -127,15 +149,21 @@ The rest of this paper is as follows: Section 2 introduces background of existin
 \subsection{Results}
 
 
-\hspace{5mm}The Isomap Method.
+\hspace{5mm}The Isomap Method worked quite efficiently on the Swiss roll dataset. The swiss roll contained around 1000 points, and so this made me hesitant on how well Isomap would perform. However, it does a pretty decent job of preserving the global structure of the original data.
 
-\subsection{Results}
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=100mm]{swissrollunrolled.png}
+    \caption{Swiss Roll unrolled}
+    \label{fig:swissunrolled}
+\end{figure}
+
 
 \newpage
 
 \section{Discussion} \label{sec:discussion}
 
-\hspace{5mm}Many teens in the United States report being exposed to e-cigarette marketing messages via a number of outlets. Ads for e-cigarettes may impact teenage beginning of e-cigarette usage. According to the findings of this study, exposure to e-cigarette ads can also impact teenagers' risk perception of smoking cigarettes, which is a strong predictor of smoking start (Roditis et al., 2016; Song et al., 2009). Youth who've never-smoked and were exposed to e-cigarette commercials reported considerably decreased perceived hazards of smoking cigarettes. Regulating the platforms and material of e-cigarette marketing should be examined in order to reduce teenage exposure and the potentially negative impacts on nonsmokers. 
+\hspace{5mm}
 
 
 \subsection{Limitations}
@@ -197,11 +225,19 @@ pp. 1–130, 2009
 
 \bibitem{umap JHU}shorturl.at/clIQS
 
+\bibitem{t-SNE}Laurens van der Maaten, and Geoffrey Hinton. “Visualizing Data Using T-SNE.” Journal of Machine Learning Research, vol. 1, 2008, pp. 1–48, www.cs.toronto.edu/$\sim\text{hinton/absps/tsne.pdf.}$
+
+
+
 \end{thebibliography}
 
 
 \section{Supplementary materials}
 
 Try and put your tables, charts, images here! Simply cite them up top when you're writing your sections. Thanks :D
+
+\section{Contributions}
+
+\hspace{5mm}All three of us contributed to the writing of the introduction and literature review of this report. Shrey wrote the t-SNE section, Ruirui the Diffusion map, and Jacob wrote the Local Linear embedding, Isomap, and discussion sections. 
 
 \end{document}
